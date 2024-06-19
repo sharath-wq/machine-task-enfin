@@ -23,7 +23,8 @@ it('returns all books if no query parameters are provided', async () => {
     await createTestBook('Book2', 'Description2');
 
     const response = await request(app).get('/api/books').send({});
-    expect(response.body.length).toEqual(2);
+
+    expect(response.body.books.length).toEqual(2);
 });
 
 it('performs pagination if page and limit query parameters are provided', async () => {
@@ -32,8 +33,8 @@ it('performs pagination if page and limit query parameters are provided', async 
     await createTestBook('Book3', 'Description3');
 
     const response = await request(app).get('/api/books').query({ page: 2, limit: 1 }).send({});
-    expect(response.body.length).toEqual(1);
-    expect(response.body[0].name).toEqual('Book2');
+    expect(response.body.books.length).toEqual(1);
+    expect(response.body.books[0].name).toEqual('Book2');
 });
 
 it('searches books by name or description if search query parameter is provided', async () => {
@@ -42,16 +43,16 @@ it('searches books by name or description if search query parameter is provided'
     await createTestBook('Book Three', 'Description3');
 
     const response = await request(app).get('/api/books').query({ search: 'great' }).send({});
-    expect(response.body.length).toEqual(1);
-    expect(response.body.map((book: any) => book.name)).toContain('Another Great Book');
+    expect(response.body.books.length).toEqual(1);
+    expect(response.body.books.map((book: any) => book.name)).toContain('Another Great Book');
 });
 
 it('returns empty array if no books match search criteria', async () => {
     const response = await request(app).get('/api/books').query({ search: 'Nonexistent' }).send({});
-    expect(response.body.length).toEqual(0);
+    expect(response.body.books.length).toEqual(0);
 });
 
 it('handles invalid page and limit query parameters gracefully', async () => {
     const response = await request(app).get('/api/books').query({ page: 'invalid', limit: 'invalid' }).send({});
-    expect(response.body.length).toEqual(0);
+    expect(response.body.books.length).toEqual(0);
 });
