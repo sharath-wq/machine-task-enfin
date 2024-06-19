@@ -19,7 +19,7 @@ import useDebounce from './lib/deboune';
 
 export default function Component() {
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [books, setBooks] = useState<any[]>([]);
+    const [books, setBooks] = useState<Book[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [totalPages, setTotalPages] = useState<number>(1);
 
@@ -142,46 +142,52 @@ export default function Component() {
                 </div>
             </div>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
-                {books.map((book: any) => (
-                    <Card
-                        key={book.id}
-                        className='w-full max-w-sm bg-white shadow-md rounded-lg overflow-hidden dark:bg-gray-900'
-                    >
-                        <div className='flex flex-col h-full justify-between p-6 space-y-4'>
-                            <div className='space-y-2'>
-                                <h3 className='text-xl font-bold'>{book.name}</h3>
-                                <p className='text-gray-500 dark:text-gray-400'>{book.description}</p>
-                                <div className='flex justify-between'>
-                                    <p className='text-gray-500 dark:text-gray-400'>
-                                        Published on: {new Date(book.publishDate).toLocaleDateString()}
-                                    </p>
-                                    <div className='top-4 right-4 bg-green-900 text-white px-3 py-1 rounded-full text-sm'>
-                                        ₹ {book.price}
-                                    </div>
-                                </div>
-                            </div>
-                            <Button type='button' size='lg' className='w-full'>
-                                Add to Cart
-                            </Button>
-                        </div>
-                    </Card>
-                ))}
+                {books.length
+                    ? books.map((book: any) => (
+                          <Card
+                              key={book.id}
+                              className='w-full max-w-sm bg-white shadow-md rounded-lg overflow-hidden dark:bg-gray-900'
+                          >
+                              <div className='flex flex-col h-full justify-between p-6 space-y-4'>
+                                  <div className='space-y-2'>
+                                      <h3 className='text-xl font-bold'>{book.name}</h3>
+                                      <p className='text-gray-500 dark:text-gray-400'>{book.description}</p>
+                                      <div className='flex justify-between'>
+                                          <p className='text-gray-500 dark:text-gray-400'>
+                                              Published on: {new Date(book.publishDate).toLocaleDateString()}
+                                          </p>
+                                          <div className='top-4 right-4 bg-green-900 text-white px-3 py-1 rounded-full text-sm'>
+                                              ₹ {book.price}
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <Button type='button' size='lg' className='w-full'>
+                                      Add to Cart
+                                  </Button>
+                              </div>
+                          </Card>
+                      ))
+                    : 'No books'}
             </div>
-            <div className='mt-10'>
-                <Pagination>
-                    <PaginationContent>
-                        <PaginationItem>
-                            <PaginationPrevious onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))} />
-                        </PaginationItem>
-                        {generatePagination()}
-                        <PaginationItem>
-                            <PaginationNext
-                                onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages))}
-                            />
-                        </PaginationItem>
-                    </PaginationContent>
-                </Pagination>
-            </div>
+            {books.length > 0 && (
+                <div className='mt-10'>
+                    <Pagination>
+                        <PaginationContent>
+                            <PaginationItem>
+                                <PaginationPrevious
+                                    onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
+                                />
+                            </PaginationItem>
+                            {generatePagination()}
+                            <PaginationItem>
+                                <PaginationNext
+                                    onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages))}
+                                />
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                </div>
+            )}
         </div>
     );
 }
