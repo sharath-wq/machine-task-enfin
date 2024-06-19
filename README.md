@@ -36,8 +36,8 @@ Make sure you have the following installed on your machine:
 1. Clone the repository:
 
     ```sh
-    git clone https://github.com/sharath-wq/mechinte-task-enfin.git
-    cd mechinte-task-enfin
+    git clone https://github.com/sharath-wq/machine-task-enfin.git
+    cd machine-task-enfin
     ```
 
 2. Navigate to the backend directory:
