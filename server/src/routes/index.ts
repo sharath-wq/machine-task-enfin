@@ -26,7 +26,10 @@ router.get('/api/books', async (req: Request<{}, {}, {}, BookQuery>, res: Respon
     }
 
     const books = await Book.find(query).skip(skip).limit(limit);
-    res.send(books);
+    const totalBooks = await Book.find(query).countDocuments();
+
+    const totalPages = Math.ceil(totalBooks / limit);
+    res.send({ books, totalPages });
 });
 
 export { router as getBooksRouter };

@@ -18,13 +18,6 @@ const validateBook = [
         .withMessage('Price must be a number greater than 0')
         .notEmpty()
         .withMessage('Price is required'),
-    body('imageUrl')
-        .isString()
-        .withMessage('Image URL must be a string')
-        .notEmpty()
-        .withMessage('Image URL is required')
-        .isURL()
-        .withMessage('Image URL must be a valid URL'),
 ];
 
 export { validateBook };

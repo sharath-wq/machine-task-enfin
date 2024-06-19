@@ -6,9 +6,9 @@ import { validateBook } from '../middleware/book-validator';
 const router = express.Router();
 
 router.post('/api/books', validateBook, validateRequest, async (req: Request, res: Response) => {
-    const { name, description, publishDate, price, imageUrl } = req.body;
+    const { name, description, publishDate, price } = req.body;
 
-    const book = Book.build({ name, description, publishDate, price, imageUrl });
+    const book = Book.build({ name, description, publishDate, price });
 
     await book.save();
 

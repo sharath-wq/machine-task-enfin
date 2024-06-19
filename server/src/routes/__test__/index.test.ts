@@ -8,7 +8,6 @@ const createTestBook = async (name: string, description: string) => {
         description,
         publishDate: new Date(),
         price: 20,
-        imageUrl: 'http://example.com/image.jpg',
     });
     await book.save();
     return book;

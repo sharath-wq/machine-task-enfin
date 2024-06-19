@@ -5,7 +5,6 @@ interface BookAttrs {
     description: string;
     publishDate: Date;
     price: number;
-    imageUrl: string;
 }
 
 // Interface that describes the properties that a book model has
@@ -19,7 +18,6 @@ export interface BookDoc extends mongoose.Document {
     description: string;
     publishDate: Date;
     price: number;
-    imageUrl: string;
 }
 
 const bookSchema = new mongoose.Schema(
@@ -39,10 +37,6 @@ const bookSchema = new mongoose.Schema(
         price: {
             type: Number,
             reqruied: true,
-        },
-        imageUrl: {
-            type: String,
-            required: true,
         },
     },
     {
